@@ -1,0 +1,25 @@
+﻿@model List<WebStore.Models.Product>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список продуктов</title>
+</head>
+<body>
+    <h1>Список продуктов</h1>
+    
+    <table>
+        <tr>
+            <th>Наименование</th>
+            <th>Цена</th>
+        </tr>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.name</td>
+                <td>@product.price</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>
