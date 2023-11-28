@@ -12,5 +12,9 @@ namespace WebStore.Models
 
         public DbSet<Product> product { get; set; }
         public DbSet<Category> category { get; set; }
+        
+        public DbSet<IsRole> isRole { get; set; }
+        
+        public DbSet<User> user { get; set; }
     }
 }

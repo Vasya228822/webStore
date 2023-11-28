@@ -16,6 +16,8 @@ builder.Services.AddDbContext<IdentityUser>(options =>
 
 builder.Services.AddScoped<Product>();
 builder.Services.AddScoped<Category>();
+builder.Services.AddScoped<IsRole>();
+builder.Services.AddScoped<User>();
 
 var app = builder.Build();
 
