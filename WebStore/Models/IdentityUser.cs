@@ -16,5 +16,7 @@ namespace WebStore.Models
         public DbSet<IsRole> isRole { get; set; }
         
         public DbSet<User> user { get; set; }
+        
+        public DbSet<Order> order { get; set; }
     }
 }

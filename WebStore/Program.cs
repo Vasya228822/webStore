@@ -1,7 +1,10 @@
 using WebStore.Models;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,7 @@ builder.Services.AddScoped<Product>();
 builder.Services.AddScoped<Category>();
 builder.Services.AddScoped<IsRole>();
 builder.Services.AddScoped<User>();
+builder.Services.AddScoped<Order>();
 
 var app = builder.Build();
 
