@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebStore.Dto;
 using WebStore.Models;
 
 namespace WebStore.Controllers;
@@ -15,9 +16,15 @@ public class UserController : Controller
         _db = db;
     }
     // GET
-    public async Task<IActionResult> Index()
+    public ViewResult Index()
     {
-        var users = await _db.user.ToListAsync();
+        var users = from b in _db.user 
+            select new UserDto()
+            {
+                id = b.id,
+                name = b.name,
+                numberPhone = b.numberPhone
+            };
         return View(users);
     }
     
