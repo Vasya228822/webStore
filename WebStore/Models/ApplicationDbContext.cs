@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WebStore.Models
 {
-    public class IdentityUser : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public IdentityUser(DbContextOptions<IdentityUser> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
@@ -14,9 +15,7 @@ namespace WebStore.Models
         public DbSet<Category> category { get; set; }
         
         public DbSet<IsRole> isRole { get; set; }
-        
         public DbSet<User> user { get; set; }
-        
         public DbSet<Order> order { get; set; }
     }
 }

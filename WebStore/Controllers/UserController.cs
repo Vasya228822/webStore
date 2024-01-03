@@ -7,17 +7,17 @@ namespace WebStore.Controllers;
 
 public class UserController : Controller
 {
-    private readonly IdentityUser db;
+    private readonly ApplicationDbContext _db;
     
-    public UserController( IdentityUser _db)
+    public UserController( ApplicationDbContext db)
     {
         
-        db = _db;
+        _db = db;
     }
     // GET
     public async Task<IActionResult> Index()
     {
-        var users = await db.user.ToListAsync();
+        var users = await _db.user.ToListAsync();
         return View(users);
     }
     

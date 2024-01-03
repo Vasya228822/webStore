@@ -8,17 +8,17 @@ namespace WebStore.Controllers;
 public class OrderController : Controller
 {
     
-    private readonly IdentityUser db;
+    private readonly ApplicationDbContext _db;
     
-    public OrderController( IdentityUser _db)
+    public OrderController( ApplicationDbContext db)
     {
         
-        db = _db;
+        _db = db;
     }
     // GET
     public async Task<IActionResult> Index()
     {
-        var orders = await db.order.ToListAsync();
+        var orders = await _db.order.ToListAsync();
         return View(orders);
     }
     
@@ -30,7 +30,7 @@ public class OrderController : Controller
             return NotFound();
         }
 
-        var order = await db.order.FirstOrDefaultAsync(o => o.id == id);
+        var order = await _db.order.FirstOrDefaultAsync(o => o.id == id);
         if (order == null)
         {
             return NotFound();
@@ -55,8 +55,8 @@ public class OrderController : Controller
             
             order.orderTime = DateTime.UtcNow;
 
-            db.Add(order);
-            await db.SaveChangesAsync();
+            _db.Add(order);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -71,7 +71,7 @@ public class OrderController : Controller
                 return NotFound();
             }
 
-            var order = await db.order.FindAsync(id);
+            var order = await _db.order.FindAsync(id);
             if (order == null)
             {
                 return NotFound();
@@ -91,8 +91,8 @@ public class OrderController : Controller
 
             if (ModelState.IsValid)
             {
-                db.Update(order);
-                await db.SaveChangesAsync();
+                _db.Update(order);
+                await _db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -109,7 +109,7 @@ public class OrderController : Controller
                 return NotFound();
             }
 
-            var order = await db.order.FirstOrDefaultAsync(m => m.id == id);
+            var order = await _db.order.FirstOrDefaultAsync(m => m.id == id);
             if (order == null)
             {
                 return NotFound();
@@ -123,9 +123,9 @@ public class OrderController : Controller
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var order = await db.order.FindAsync(id);
-            db.order.Remove(order);
-            await db.SaveChangesAsync();
+            var order = await _db.order.FindAsync(id);
+            _db.order.Remove(order);
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         

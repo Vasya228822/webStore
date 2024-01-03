@@ -6,17 +6,17 @@ namespace WebStore.Controllers;
 
 public class CategoryController : Controller
 {
-    private readonly IdentityUser db;
+    private readonly ApplicationDbContext _db;
     
-    public CategoryController( IdentityUser _db)
+    public CategoryController( ApplicationDbContext db)
     {
         
-        db = _db;
+        _db = db;
     }
     // GET
     public IActionResult Index()
     {
-        var categories = db.category.ToList();
+        var categories = _db.category.ToList();
         
         return View(categories);
     }

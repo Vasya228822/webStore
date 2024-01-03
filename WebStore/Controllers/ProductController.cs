@@ -6,17 +6,17 @@ namespace WebStore.Controllers;
 
 public class ProductController : Controller
 {
-    private readonly IdentityUser db;
+    private readonly ApplicationDbContext _db;
     
-    public ProductController( IdentityUser _db)
+    public ProductController( ApplicationDbContext db)
     {
         
-        db = _db;
+        _db = db;
     }
     // GET
     public IActionResult Index()
     {
-        var products = db.product.ToList();
+        var products = _db.product.ToList();
         
         return View(products);
     }
