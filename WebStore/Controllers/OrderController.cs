@@ -9,28 +9,29 @@ public class OrderController : Controller
 {
     
     private readonly ApplicationDbContext _db;
-    
+
     public OrderController( ApplicationDbContext db)
     {
         
         _db = db;
     }
     // GET
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(CancellationToken token)
     {
-        var orders = await _db.order.ToListAsync();
+        
+        var orders = await _db.order.ToListAsync(token);
         return View(orders);
     }
     
     // GET: Order/Details/5
-    public async Task<IActionResult> Details(int? id)
+    public async Task<IActionResult> Details(int? id,CancellationToken token)
     {
         if (id == null)
         {
             return NotFound();
         }
 
-        var order = await _db.order.FirstOrDefaultAsync(o => o.id == id);
+        var order = await _db.order.FirstOrDefaultAsync(o => o.id == id,token);
         if (order == null)
         {
             return NotFound();
@@ -48,7 +49,7 @@ public class OrderController : Controller
     // POST: Order/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Order order)
+    public async Task<IActionResult> Create(Order order,CancellationToken token)
     {
         if (ModelState.IsValid)
         {
@@ -56,7 +57,7 @@ public class OrderController : Controller
             order.orderTime = DateTime.UtcNow;
 
             _db.Add(order);
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(token);
             return RedirectToAction("Index");
         }
 
@@ -64,25 +65,25 @@ public class OrderController : Controller
     }
     
     // GET: Order/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+    public async Task<IActionResult> Edit(int? id, CancellationToken token)
+    {
+        if (id == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order = await _db.order.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            return View(order);
+            return NotFound();
         }
+
+        var order = await _db.order.FindAsync(new object[] { id }, token);
+        if (order == null)
+        {
+            return NotFound();
+        }
+        return View(order);
+    }
 
         // POST: Order/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Order order)
+        public async Task<IActionResult> Edit(int id, Order order,CancellationToken token)
         {
             if (id != order.id)
             {
@@ -92,7 +93,7 @@ public class OrderController : Controller
             if (ModelState.IsValid)
             {
                 _db.Update(order);
-                await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync(token);
                 return RedirectToAction("Index");
             }
 
@@ -102,14 +103,14 @@ public class OrderController : Controller
         
 
         // GET: Order/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id,CancellationToken token)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _db.order.FirstOrDefaultAsync(m => m.id == id);
+            var order = await _db.order.FirstOrDefaultAsync(m => m.id == id,token);
             if (order == null)
             {
                 return NotFound();
@@ -121,11 +122,11 @@ public class OrderController : Controller
         // POST: Order/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,CancellationToken token)
         {
             var order = await _db.order.FindAsync(id);
             _db.order.Remove(order);
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(token);
             return RedirectToAction(nameof(Index));
         }
         
