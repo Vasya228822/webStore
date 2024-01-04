@@ -6,18 +6,18 @@ namespace WebStore.Models;
 public class Product
 {
     [Key]
-    public int id { get; set; }
+    public int Id { get; set; }
     
-    public float price { get; set; }
+    public float Price { get; set; }
     
-    public int amount { get; set; }
+    public int Amount { get; set; }
     
-    public string name { get; set; }
+    public string Name { get; set; }
     
-    public string description { get; set; }
+    public string Description { get; set; }
 
     [ForeignKey("Category")] 
-    public int categoryid { get; set; }
+    public int CategoryId { get; set; }
 
     public Category Category;
 }

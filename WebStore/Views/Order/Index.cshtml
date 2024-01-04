@@ -23,17 +23,17 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.id</td>
-            <td>@item.address</td>
-            <td>@item.house</td>
-            <td>@item.apartment</td>
-            <td>@item.totalCost</td>
-            <td>@item.orderTime</td>
-            <td>@item.userid</td>
+            <td>@item.Id</td>
+            <td>@item.Address</td>
+            <td>@item.House</td>
+            <td>@item.Apartment</td>
+            <td>@item.TotalCost</td>
+            <td>@item.OrderTime</td>
+            <td>@item.UserId</td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }

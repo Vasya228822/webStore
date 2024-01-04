@@ -7,20 +7,20 @@ namespace WebStore.Models;
 public class Order
 {
     [Key]
-    public int id { get; set; }
+    public int Id { get; set; }
     
-    public string address { get; set; }
+    public string Address { get; set; }
     
-    public string house { get; set; }
+    public string House { get; set; }
     
-    public string apartment { get; set; }
+    public string Apartment { get; set; }
     
-    public double totalCost { get; set; }
+    public double TotalCost { get; set; }
     
-    public DateTime orderTime { get; set; } = DateTime.UtcNow;
+    public DateTime OrderTime { get; set; } = DateTime.UtcNow;
     
     [ForeignKey("User")] 
-    public int userid { get; set; }
+    public int UserId { get; set; }
 
     public User User;
 

@@ -5,7 +5,7 @@ namespace WebStore.Models;
 public class IsRole
 {
     [Key]
-    public int id { get; set; }
+    public int Id { get; set; }
     
-    public bool role { get; set; }
+    public bool Role { get; set; }
 }

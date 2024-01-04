@@ -21,9 +21,9 @@ public class UserController : Controller
         var users = from b in _db.user 
             select new UserDto()
             {
-                id = b.id,
-                name = b.name,
-                numberPhone = b.numberPhone
+                id = b.Id,
+                name = b.Name,
+                numberPhone = b.NumberPhone
             };
         return View(users);
     }

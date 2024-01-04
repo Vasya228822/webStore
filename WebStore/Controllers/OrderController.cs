@@ -31,7 +31,7 @@ public class OrderController : Controller
             return NotFound();
         }
 
-        var order = await _db.order.FirstOrDefaultAsync(o => o.id == id,token);
+        var order = await _db.order.FirstOrDefaultAsync(o => o.Id == id,token);
         if (order == null)
         {
             return NotFound();
@@ -54,7 +54,7 @@ public class OrderController : Controller
         if (ModelState.IsValid)
         {
             
-            order.orderTime = DateTime.UtcNow;
+            order.OrderTime = DateTime.UtcNow;
 
             _db.Add(order);
             await _db.SaveChangesAsync(token);
@@ -85,7 +85,7 @@ public class OrderController : Controller
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Order order,CancellationToken token)
         {
-            if (id != order.id)
+            if (id != order.Id)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ public class OrderController : Controller
                 return NotFound();
             }
 
-            var order = await _db.order.FirstOrDefaultAsync(m => m.id == id,token);
+            var order = await _db.order.FirstOrDefaultAsync(m => m.Id == id,token);
             if (order == null)
             {
                 return NotFound();

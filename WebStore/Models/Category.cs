@@ -5,7 +5,7 @@ namespace WebStore.Models;
 public class Category
 {
     [Key]
-    public int id { get; set; }
+    public int Id { get; set; }
 
-    public string name { get; set; }
+    public string Name { get; set; }
 }

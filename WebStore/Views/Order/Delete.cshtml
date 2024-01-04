@@ -9,18 +9,18 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.address)
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.address)
+            @Html.DisplayFor(model => model.Address)
         </dd>
 
         <!-- Добавьте аналогичные блоки для других полей, как в примере выше -->
     </dl>
 </div>
 
-<form asp-action="Delete" asp-route-id="@Model.id" method="post">
-    <input type="hidden" asp-for="id" />
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
         <input type="submit" value="Delete" class="btn btn-danger" />
