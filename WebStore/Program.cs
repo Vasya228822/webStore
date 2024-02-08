@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddScoped<Category>();
 builder.Services.AddScoped<IsRole>();
 builder.Services.AddScoped<User>();
 builder.Services.AddScoped<Order>();
+builder.Services.AddScoped<OrderService>();
 
 var app = builder.Build();
 

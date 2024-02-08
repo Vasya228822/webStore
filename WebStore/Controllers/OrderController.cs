@@ -1,89 +1,72 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebStore.Models;
+using WebStore.Services;
+using System.Threading;
 
-namespace WebStore.Controllers;
-
-public class OrderController : Controller
+namespace WebStore.Controllers
 {
-    
-    private readonly ApplicationDbContext _db;
+    public class OrderController : Controller
+    {
+        private readonly OrderService _orderService;
 
-    public OrderController( ApplicationDbContext db)
-    {
-        
-        _db = db;
-    }
-    // GET
-    public async Task<IActionResult> Index(CancellationToken token)
-    {
-        
-        var orders = await _db.order.ToListAsync(token);
-        return View(orders);
-    }
-    
-    // GET: Order/Details/5
-    public async Task<IActionResult> Details(int? id,CancellationToken token)
-    {
-        if (id == null)
+        public OrderController(OrderService orderService)
         {
-            return NotFound();
+            _orderService = orderService;
         }
 
-        var order = await _db.order.FirstOrDefaultAsync(o => o.Id == id,token);
-        if (order == null)
+        // GET: Order/Index
+        public async Task<IActionResult> Index(CancellationToken token)
         {
-            return NotFound();
+            var orders = await _orderService.GetAllOrdersAsync(token);
+            return View(orders.ToList());
         }
 
-        return View(order);
-    }
-    
-    // GET: Order/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
-    
-    // POST: Order/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Order order,CancellationToken token)
-    {
-        if (ModelState.IsValid)
+        // GET: Order/Details/5
+        public async Task<IActionResult> Details(int id, CancellationToken token)
         {
-            
-            order.OrderTime = DateTime.UtcNow;
-
-            _db.Add(order);
-            await _db.SaveChangesAsync(token);
-            return RedirectToAction("Index");
+            var order = await _orderService.GetOrderAsync(id, token);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
         }
 
-        return View(order);
-    }
-    
-    // GET: Order/Edit/5
-    public async Task<IActionResult> Edit(int? id, CancellationToken token)
-    {
-        if (id == null)
+        // GET: Order/Create
+        public IActionResult Create()
         {
-            return NotFound();
+            return View();
         }
 
-        var order = await _db.order.FindAsync(new object[] { id }, token);
-        if (order == null)
+        // POST: Order/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Order order, CancellationToken token)
         {
-            return NotFound();
+            if (ModelState.IsValid)
+            {
+                await _orderService.AddOrderAsync(order, token);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(order);
         }
-        return View(order);
-    }
+
+        // GET: Order/Edit/5
+        public async Task<IActionResult> Edit(int id, CancellationToken token)
+        {
+            var order = await _orderService.GetOrderAsync(id, token);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
+        }
 
         // POST: Order/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Order order,CancellationToken token)
+        public async Task<IActionResult> Edit(int id, Order order, CancellationToken token)
         {
             if (id != order.Id)
             {
@@ -92,43 +75,34 @@ public class OrderController : Controller
 
             if (ModelState.IsValid)
             {
-                _db.Update(order);
-                await _db.SaveChangesAsync(token);
-                return RedirectToAction("Index");
+                await _orderService.UpdateOrderAsync(order, token);
+                return RedirectToAction(nameof(Index));
             }
-
             return View(order);
         }
 
-        
-
         // GET: Order/Delete/5
-        public async Task<IActionResult> Delete(int? id,CancellationToken token)
+        public async Task<IActionResult> Delete(int id, CancellationToken token)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var order = await _db.order.FirstOrDefaultAsync(m => m.Id == id,token);
+            var order = await _orderService.GetOrderAsync(id, token);
             if (order == null)
             {
                 return NotFound();
             }
-
             return View(order);
         }
 
         // POST: Order/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id,CancellationToken token)
+        public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken token)
         {
-            var order = await _db.order.FindAsync(id);
-            _db.order.Remove(order);
-            await _db.SaveChangesAsync(token);
+            var order = await _orderService.GetOrderAsync(id, token);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            await _orderService.DeleteOrderAsync(order, token);
             return RedirectToAction(nameof(Index));
         }
-        
-        
+
+    }
 }
