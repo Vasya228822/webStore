@@ -14,30 +14,30 @@ public class OrderService
         _db = db;
     }
 
-    public async Task<IEnumerable<Order>> GetAllOrdersAsync(CancellationToken token)
+    public async Task<IEnumerable<Order>> GetAllAsync(CancellationToken token)
     {
-        return await _db.order.ToListAsync(token);
+        return await _db.Orders.ToListAsync(token);
     }
 
-    public async Task<Order> GetOrderAsync(int id,CancellationToken token)
+    public async Task<Order> GetAsync(int id,CancellationToken token)
     {
-        return await _db.order.FindAsync(id,token);
+        return await _db.Orders.FindAsync(id,token);
     }
-    public async Task AddOrderAsync(Order order, CancellationToken token)
+    public async Task AddAsync(Order order, CancellationToken token)
     {
-        _db.order.Add(order);
+        _db.Orders.Add(order);
         await _db.SaveChangesAsync(token);
     }
 
-    public async Task UpdateOrderAsync(Order order, CancellationToken token)
+    public async Task UpdateAsync(Order order, CancellationToken token)
     {
-        _db.order.Update(order);
+        _db.Orders.Update(order);
         await _db.SaveChangesAsync(token);
     }
 
-    public async Task DeleteOrderAsync(Order order, CancellationToken token)
+    public async Task DeleteAsync(Order order, CancellationToken token)
     {
-        _db.order.Remove(order);
+        _db.Orders.Remove(order);
         await _db.SaveChangesAsync(token);
     }
 }

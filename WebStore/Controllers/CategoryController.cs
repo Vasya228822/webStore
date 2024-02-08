@@ -16,7 +16,7 @@ public class CategoryController : Controller
     // GET
     public IActionResult Index()
     {
-        var categories = _db.category.ToList();
+        var categories = _db.Categories.ToList();
         
         return View(categories);
     }

@@ -16,7 +16,7 @@ public class ProductController : Controller
     // GET
     public IActionResult Index()
     {
-        var products = _db.product.ToList();
+        var products = _db.Products.ToList();
         
         return View(products);
     }

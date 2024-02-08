@@ -19,5 +19,5 @@ public class User
     [ForeignKey("IsRole")] 
     public int RoleId { get; set; }
 
-    public IsRole Isrole;
+    public Role Role;
 }

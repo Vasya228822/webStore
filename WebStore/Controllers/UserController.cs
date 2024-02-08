@@ -18,7 +18,7 @@ public class UserController : Controller
     // GET
     public ViewResult Index()
     {
-        var users = from b in _db.user 
+        var users = from b in _db.Users 
             select new UserDto()
             {
                 id = b.Id,

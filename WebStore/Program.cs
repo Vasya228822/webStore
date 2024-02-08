@@ -20,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<Product>();
 builder.Services.AddScoped<Category>();
-builder.Services.AddScoped<IsRole>();
+builder.Services.AddScoped<Role>();
 builder.Services.AddScoped<User>();
 builder.Services.AddScoped<Order>();
 builder.Services.AddScoped<OrderService>();

@@ -18,14 +18,14 @@ namespace WebStore.Controllers
         // GET: Order/Index
         public async Task<IActionResult> Index(CancellationToken token)
         {
-            var orders = await _orderService.GetAllOrdersAsync(token);
+            var orders = await _orderService.GetAllAsync(token);
             return View(orders.ToList());
         }
 
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int id, CancellationToken token)
         {
-            var order = await _orderService.GetOrderAsync(id, token);
+            var order = await _orderService.GetAsync(id, token);
             if (order == null)
             {
                 return NotFound();
@@ -46,7 +46,7 @@ namespace WebStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _orderService.AddOrderAsync(order, token);
+                await _orderService.AddAsync(order, token);
                 return RedirectToAction(nameof(Index));
             }
             return View(order);
@@ -55,7 +55,7 @@ namespace WebStore.Controllers
         // GET: Order/Edit/5
         public async Task<IActionResult> Edit(int id, CancellationToken token)
         {
-            var order = await _orderService.GetOrderAsync(id, token);
+            var order = await _orderService.GetAsync(id, token);
             if (order == null)
             {
                 return NotFound();
@@ -75,7 +75,7 @@ namespace WebStore.Controllers
 
             if (ModelState.IsValid)
             {
-                await _orderService.UpdateOrderAsync(order, token);
+                await _orderService.UpdateAsync(order, token);
                 return RedirectToAction(nameof(Index));
             }
             return View(order);
@@ -84,7 +84,7 @@ namespace WebStore.Controllers
         // GET: Order/Delete/5
         public async Task<IActionResult> Delete(int id, CancellationToken token)
         {
-            var order = await _orderService.GetOrderAsync(id, token);
+            var order = await _orderService.GetAsync(id, token);
             if (order == null)
             {
                 return NotFound();
@@ -95,12 +95,12 @@ namespace WebStore.Controllers
         // POST: Order/Delete/5
         public async Task<IActionResult> DeleteConfirmed(int id, CancellationToken token)
         {
-            var order = await _orderService.GetOrderAsync(id, token);
+            var order = await _orderService.GetAsync(id, token);
             if (order == null)
             {
                 return NotFound();
             }
-            await _orderService.DeleteOrderAsync(order, token);
+            await _orderService.DeleteAsync(order, token);
             return RedirectToAction(nameof(Index));
         }
 
